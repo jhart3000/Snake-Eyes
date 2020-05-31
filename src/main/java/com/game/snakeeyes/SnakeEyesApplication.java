@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoCo
 public class SnakeEyesApplication {
 
   // TODO add Docker file, postman collection, detailed Readme, update to swagger 3, add swagger
-  // details in playResponse, add sonar qube
+  // details in playResponse, add sonar qube,  add some sl4j logging
 
   public static void main(String[] args) {
     SpringApplication.run(SnakeEyesApplication.class, args);

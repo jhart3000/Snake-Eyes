@@ -1,15 +1,15 @@
 package com.game.snakeeyes.service;
 
 import com.game.snakeeyes.client.GetRandomNumbersClient;
+import com.game.snakeeyes.exception.ClientException;
 import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.model.RandomNumbersResponse;
 import com.game.snakeeyes.mongodb.BalanceDocument;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.game.snakeeyes.helper.JsonHelper.mapJsonFileToObject;
 import static com.game.snakeeyes.helper.TestDataHelper.*;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class PlayServiceTest {
 
   private PlayService service;
@@ -66,9 +66,10 @@ class PlayServiceTest {
     assertThat(errorResponse)
         .hasMessage(
             "You don't have enough in your balance to play with this stake, either play with a lower stake or add more money to your balance");
+    assertThat(errorResponse).isInstanceOf(SnakeEyesException.class);
   }
 
-  private void mockClient(int dice1, int dice2) throws SnakeEyesException {
+  private void mockClient(int dice1, int dice2) throws ClientException {
     given(client.getRandomNumbers())
         .willReturn(RandomNumbersResponse.builder().dice1(dice1).dice2(dice2).build());
   }

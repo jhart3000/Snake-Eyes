@@ -1,5 +1,6 @@
 package com.game.snakeeyes.controller;
 
+import com.game.snakeeyes.exception.ClientException;
 import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.service.PlayService;
@@ -29,7 +30,7 @@ public class PlayController {
               required = true)
           @RequestParam()
           double stake)
-      throws SnakeEyesException {
+      throws SnakeEyesException, ClientException {
 
     if (stake != 1.0 && stake != 2.0 && stake != 10.0) {
       throw new SnakeEyesException("the stake entered must be either 1.0, 2.0 or 10.0");

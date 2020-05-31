@@ -13,4 +13,10 @@ public class ErrorHandler {
     ErrorResponse errorResponse = ErrorResponse.builder().message(e.getMessage()).build();
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
   }
+
+  @ExceptionHandler(value = ClientException.class)
+  public ResponseEntity<ErrorResponse> handleApplicationException(ClientException e) {
+    ErrorResponse errorResponse = ErrorResponse.builder().message(e.getMessage()).build();
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+  }
 }
