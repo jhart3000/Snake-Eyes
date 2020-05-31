@@ -5,8 +5,6 @@ import com.game.snakeeyes.mongodb.BalanceRepository;
 
 public class MongoDBInteractionService {
 
-  //TODO add stake greater than balance check
-
   private BalanceRepository balanceRepository;
 
   public MongoDBInteractionService(BalanceRepository balanceRepository) {
@@ -21,7 +19,8 @@ public class MongoDBInteractionService {
     return balanceDocument;
   }
 
-  void saveBalanceDocument(BalanceDocument balanceDocument) {
-    balanceRepository.save(balanceDocument).subscribe();
+  void saveBalanceDocument(BalanceDocument balanceDocument, double newBalance) {
+    BalanceDocument updatedBalance = balanceDocument.toBuilder().balance(newBalance).build();
+    balanceRepository.save(updatedBalance).subscribe();
   }
 }

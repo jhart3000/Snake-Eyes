@@ -10,5 +10,4 @@ public class GetRandomNumbersClient {
   public RandomNumbersResponse getRandomNumbers() throws SnakeEyesException {
     throw new SnakeEyesException("random numbers client not implemented yet");
   }
-
 }

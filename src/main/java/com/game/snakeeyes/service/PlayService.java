@@ -20,6 +20,12 @@ public class PlayService {
   public PlayResponse getPlayResponse(double stake) throws SnakeEyesException {
 
     BalanceDocument balanceDocument = mongoDBInteractionService.getCurrentBalance();
+
+    if (stake > balanceDocument.getBalance()) {
+      throw new SnakeEyesException(
+          "You don't have enough in your balance to play with this stake, either play with a lower stake or add more money to your balance");
+    }
+
     RandomNumbersResponse randomNumbers = client.getRandomNumbers();
 
     int dice1 = randomNumbers.getDice1();
@@ -51,7 +57,6 @@ public class PlayService {
   private void updateNewBalance(double stake, BalanceDocument balanceDocument, double winnings) {
     double currentBalance = balanceDocument.getBalance();
     double newBalance = currentBalance + winnings - stake;
-    balanceDocument.setBalance(newBalance);
-    mongoDBInteractionService.saveBalanceDocument(balanceDocument);
+    mongoDBInteractionService.saveBalanceDocument(balanceDocument, newBalance);
   }
 }

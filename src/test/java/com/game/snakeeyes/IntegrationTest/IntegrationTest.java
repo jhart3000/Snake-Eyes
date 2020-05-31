@@ -3,6 +3,7 @@ package com.game.snakeeyes.IntegrationTest;
 import com.game.snakeeyes.client.GetRandomNumbersClient;
 import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.RandomNumbersResponse;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,14 @@ import static com.game.snakeeyes.helper.JsonHelper.loadJsonFile;
 import static com.game.snakeeyes.helper.TestDataHelper.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest
 @Import(EmbeddedMongoAutoConfiguration.class)
 class IntegrationTest {
-
-  // TODO add get and update balance calls during testing flow to check balance is being updated
-  // correctly
 
   @Autowired private MockMvc mvc;
 
@@ -39,10 +37,15 @@ class IntegrationTest {
 
     mockClient(1, 1);
     callPlaySnakeEyes(PLAY_RESPONSE_SNAKE_EYES);
+    callGetCurrentBalance(1029.0);
     mockClient(3, 3);
     callPlaySnakeEyes(PLAY_RESPONSE_YOU_WIN);
+    callGetCurrentBalance(1035.0);
     mockClient(1, 3);
     callPlaySnakeEyes(PLAY_RESPONSE_YOU_LOSE);
+    callGetCurrentBalance(1034.0);
+    callAddToBalance();
+    callGetCurrentBalance(1084.0);
   }
 
   private void mockClient(int dice1, int dice2) throws SnakeEyesException {
@@ -54,5 +57,17 @@ class IntegrationTest {
     mvc.perform(get("/play?stake=1.0"))
         .andExpect(status().isOk())
         .andExpect(content().json(loadJsonFile(responsePath)));
+  }
+
+  private void callGetCurrentBalance(double expectedBalance) throws Exception {
+    mvc.perform(get("/getBalance"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.currentBalance", Matchers.is(expectedBalance)));
+  }
+
+  private void callAddToBalance() throws Exception {
+    mvc.perform(put("/addToBalance?amountToAdd=50"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.message", Matchers.is("Balance successfully updated")));
   }
 }

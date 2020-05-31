@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-@Builder
+@Builder(toBuilder = true)
 public class BalanceDocument {
   @Id private int balanceId;
   private double balance;
