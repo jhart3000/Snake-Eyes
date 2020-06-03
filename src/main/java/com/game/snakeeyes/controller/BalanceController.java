@@ -1,10 +1,12 @@
 package com.game.snakeeyes.controller;
 
+import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.BalanceResponse;
 import com.game.snakeeyes.model.MessageResponse;
 import com.game.snakeeyes.service.BalanceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class BalanceController {
 
   @Autowired private BalanceService service;
@@ -37,7 +40,11 @@ public class BalanceController {
                   "The amount that the user wants to add to their balance. Must be a double",
               required = true)
           @RequestParam()
-          double amountToAdd) {
+          double amountToAdd) throws SnakeEyesException {
+    if(amountToAdd < 0) {
+      log.error("amountToAdd value: {} is negative and must be a positive value", amountToAdd);
+      throw new SnakeEyesException("the amount to add to balance cannot be negative");
+    }
     return service.addMoneyToBalance(amountToAdd);
   }
 }

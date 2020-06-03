@@ -6,7 +6,10 @@ import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.model.RandomNumbersResponse;
 import com.game.snakeeyes.mongodb.BalanceDocument;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 
+@Slf4j
 public class PlayService {
 
   private MongoDBInteractionService mongoDBInteractionService;
@@ -23,6 +26,7 @@ public class PlayService {
     BalanceDocument balanceDocument = mongoDBInteractionService.getCurrentBalance();
 
     if (stake > balanceDocument.getBalance()) {
+      log.error("stale entered: {} is greater than the users balance", stake);
       throw new SnakeEyesException(
           "You don't have enough in your balance to play with this stake, either play with a lower stake or add more money to your balance");
     }
