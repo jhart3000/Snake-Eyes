@@ -6,12 +6,14 @@ import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.service.PlayService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class PlayController {
 
   @Autowired private PlayService service;
@@ -34,6 +36,7 @@ public class PlayController {
       throws SnakeEyesException, ClientException {
 
     if (stake != 1.0 && stake != 2.0 && stake != 10.0) {
+      log.error("{} is an invalid stake. The query param can only accept 1.0, 2.0 or 10.0", stake);
       throw new SnakeEyesException("the stake entered must be either 1.0, 2.0 or 10.0");
     }
 
