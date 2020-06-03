@@ -40,8 +40,9 @@ public class BalanceController {
                   "The amount that the user wants to add to their balance. Must be a double",
               required = true)
           @RequestParam()
-          double amountToAdd) throws SnakeEyesException {
-    if(amountToAdd < 0) {
+          double amountToAdd)
+      throws SnakeEyesException {
+    if (amountToAdd < 0) {
       log.error("amountToAdd value: {} is negative and must be a positive value", amountToAdd);
       throw new SnakeEyesException("the amount to add to balance cannot be negative");
     }

@@ -51,9 +51,8 @@ class BalanceControllerTest {
   @Test
   void shouldReturnSnakeEyesExceptionWhenAmountToAddIsNegative() throws Exception {
     mvc.perform(put("/addToBalance?amountToAdd=-50"))
-            .andExpect(status().isBadRequest())
-            .andExpect(
-                    jsonPath(
-                            "$.message", Matchers.is("the amount to add to balance cannot be negative")));
+        .andExpect(status().isBadRequest())
+        .andExpect(
+            jsonPath("$.message", Matchers.is("the amount to add to balance cannot be negative")));
   }
 }

@@ -19,13 +19,13 @@ public class MongoDBInteractionService {
       log.info("initial £1000 balance created because mongoDB returned null");
       return BalanceDocument.builder().balance(1000.00).balanceId(1234).build();
     }
+    log.info("balance retrieved as: {}", balanceDocument.getBalance());
     return balanceDocument;
   }
 
   void saveBalanceDocument(BalanceDocument balanceDocument, double newBalance) {
     BalanceDocument updatedBalance = balanceDocument.toBuilder().balance(newBalance).build();
     balanceRepository.save(updatedBalance).subscribe();
-    log.info(
-        "balance successfully updated from: {} to: {}", balanceDocument.getBalance(), newBalance);
+    log.info("balance successfully updated to: {}", newBalance);
   }
 }

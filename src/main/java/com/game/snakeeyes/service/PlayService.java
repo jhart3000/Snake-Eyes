@@ -7,7 +7,6 @@ import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.model.RandomNumbersResponse;
 import com.game.snakeeyes.mongodb.BalanceDocument;
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
 
 @Slf4j
 public class PlayService {
