@@ -1,6 +1,8 @@
 This is a spring boot app using Java 11, maven and mongoDB. It requires the lombok plugin to be enabled with your chosen IDE. It also supports Docker.
 
-This app can be run using the docker-compose.yml file. Run the "docker-compose up" command in the directory that contains the docker-compose.yml file.
+First the mvn clean install command must be run to generate the snakeeyes-0.0.1-SNAPSHOT.jar in the target folder.
+
+Then the app can be run using the docker-compose.yml file. Run the "docker-compose up" command in the directory that contains the docker-compose.yml file.
 This will build the snake eyes image and run it as a container. It will also pull the mongoDB image and openjdk11 image and run the mongo image as a container.
 
 An alternate way to run the app will be to run the SnakeEyesApplication.java file and run MongoDB seperately on port 27017.
