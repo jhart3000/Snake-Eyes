@@ -13,12 +13,26 @@ The snakeEyesPostmanCollection.json can be imported into postman which includes 
 
 This service includes the following apis:
 
-1) Play snake eyes: This service takes in the chosen stake from the user, which must be either 1.0, 2.0 or 10.0.
+1) Play snake eyes:
+
+   http://localhost:8080/snakeeyes/play?stake=10.0
+   
+   This api is a GET request and takes in the chosen stake from the user, which must be either 1.0, 2.0 or 10.0.
    It then retrieves the latest balance form MongoDB or if nothing exists in MongoDB will start you with a balance of 1000.
    It then calls a random number api which simulates roling 2 dice. 
    It will then generate a winnings of x30 stake if two 1s are rolled or x7 if any other double is rolled. 
    These winnings are then updated in the users balance using mongoDB.
    
-2) Get Current Balance: This api will retrieve the latest balance fom mongoDB
+2) Get Current Balance: 
 
-3) Add To Balance: This api takes in a query param of the amount which the user wishes to add to their balance. It updates the balance document accordingly in MongoDB.
+   http://localhost:8080/snakeeyes/getBalance
+   
+   This api is a GET request and will retrieve the latest balance fom mongoDB
+   
+3) Add To Balance: 
+
+   http://localhost:8080/snakeeyes/addToBalance?amountToAdd=5000
+   
+   This api is a PUT request and takes in a query param of the amount which the user wishes to add to their balance. It updates the  
+   balance document   
+   accordingly in MongoDB.
