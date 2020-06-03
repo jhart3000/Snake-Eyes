@@ -33,6 +33,5 @@ This service includes the following apis:
 
    http://localhost:8080/snakeeyes/addToBalance?amountToAdd=5000
    
-   This api is a PUT request and takes in a query param of the amount which the user wishes to add to their balance. It updates the  
-   balance document   
-   accordingly in MongoDB.
+   This api is a PUT request and takes in a query param of the amount which the user wishes to add to their balance. 
+   It updates the balance document accordingly in MongoDB.
