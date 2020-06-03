@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "80c5b9bd-ca75-49b3-bf1a-78f7098ee713",
+		"name": "Snake Eyes Collection",
+		"description": "Contains 3 api calls:\r\n\r\n1) Play snake eyes\r\n2) Get current balance\r\n3) Add to balance",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Play Snake Eyes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/snakeeyes/play?stake=10.0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"snakeeyes",
+						"play"
+					],
+					"query": [
+						{
+							"key": "stake",
+							"value": "10.0"
+						}
+					]
+				},
+				"description": "Hit this api with a stake query param of either 1.0, 2.0 or 10.0"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Balance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/snakeeyes/getBalance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"snakeeyes",
+						"getBalance"
+					]
+				},
+				"description": "Get the current balance from mongoDB"
+			},
+			"response": []
+		},
+		{
+			"name": "Add To Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/snakeeyes/addToBalance?amountToAdd=5000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"snakeeyes",
+						"addToBalance"
+					],
+					"query": [
+						{
+							"key": "amountToAdd",
+							"value": "5000"
+						}
+					]
+				},
+				"description": "Add money to the balance and save to mongoDB"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
