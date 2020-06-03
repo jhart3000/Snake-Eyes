@@ -5,7 +5,7 @@ This will build the snake eyes image and run it as a container. It will also pul
 
 An alternate way to run the app will be to run the SnakeEyesApplication.java file and run MongoDB seperately on port 27017.
 
-When the snake eyes server is running it will be exposed on port 8080. the swagger can be viewed unsing the following link:
+When the snake eyes server is running it will be exposed on port 8080. the swagger can be viewed using the following link:
 
 http://localhost:8080/snakeeyes/swagger-ui.html#/
 
@@ -13,7 +13,7 @@ The snakeEyesPostmanCollection.json can be imported into postman which includes 
 
 This service includes the following apis:
 
-1) Play snake eyes: This service takes in the chosen stake from the user, which must be either 1.0, 3.0 or 10.0.
+1) Play snake eyes: This service takes in the chosen stake from the user, which must be either 1.0, 2.0 or 10.0.
    It then retrieves the latest balance form MongoDB or if nothing exists in MongoDB will start you with a balance of 1000.
    It then calls a random number api which simulates roling 2 dice. 
    It will then generate a winnings of x30 stake if two 1s are rolled or x7 if any other double is rolled. 
