@@ -55,20 +55,20 @@ class IntegrationTest {
   }
 
   private void callPlaySnakeEyes(String responsePath) throws Exception {
-    mvc.perform(get("/play?stake=1.0"))
+    mvc.perform(get(PLAY_URL))
         .andExpect(status().isOk())
         .andExpect(content().json(loadJsonFile(responsePath)));
   }
 
   private void callGetCurrentBalance(double expectedBalance) throws Exception {
-    mvc.perform(get("/getBalance"))
+    mvc.perform(get(GET_BALANCE_URL))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.currentBalance", Matchers.is(expectedBalance)));
+        .andExpect(jsonPath(BALANCE_QUERY, Matchers.is(expectedBalance)));
   }
 
   private void callAddToBalance() throws Exception {
     mvc.perform(put("/addToBalance?amountToAdd=50"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.message", Matchers.is("Balance successfully updated")));
+        .andExpect(jsonPath(MESSAGE_QUERY, Matchers.is(BALANCE_UPDATED)));
   }
 }

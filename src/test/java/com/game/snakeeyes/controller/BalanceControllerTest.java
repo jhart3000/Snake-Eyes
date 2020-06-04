@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.game.snakeeyes.helper.TestDataHelper.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -27,20 +28,20 @@ class BalanceControllerTest {
 
   @Test
   void shouldReturnSuccessfulMessage() throws Exception {
-    given(service.addMoneyToBalance(500.0))
-        .willReturn(MessageResponse.builder().message("Balance successfully updated").build());
+    given(service.addMoneyToBalance(FIVE_HUNDRED))
+        .willReturn(MessageResponse.builder().message(BALANCE_UPDATED).build());
     mvc.perform(put("/addToBalance?amountToAdd=500.0"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.message", Matchers.is("Balance successfully updated")));
+        .andExpect(jsonPath(MESSAGE_QUERY, Matchers.is(BALANCE_UPDATED)));
   }
 
   @Test
   void shouldReturnSuccessfulBalanceResponse() throws Exception {
     given(service.getCurrentBalance())
-        .willReturn(BalanceResponse.builder().currentBalance(500.0).build());
-    mvc.perform(get("/getBalance"))
+        .willReturn(BalanceResponse.builder().currentBalance(FIVE_HUNDRED).build());
+    mvc.perform(get(GET_BALANCE_URL))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.currentBalance", Matchers.is(500.0)));
+        .andExpect(jsonPath(BALANCE_QUERY, Matchers.is(500.0)));
   }
 
   @Test
@@ -53,7 +54,8 @@ class BalanceControllerTest {
     mvc.perform(put("/addToBalance?amountToAdd=-50"))
         .andExpect(status().isBadRequest())
         .andExpect(
-            jsonPath("$.message", Matchers.is("the amount to add to balance cannot be negative")));
+            jsonPath(
+                MESSAGE_QUERY, Matchers.is("the amount to add to balance cannot be negative")));
   }
 
   @Test
@@ -62,7 +64,7 @@ class BalanceControllerTest {
         .andExpect(status().isBadRequest())
         .andExpect(
             jsonPath(
-                "$.message",
+                MESSAGE_QUERY,
                 Matchers.is(
                     "the amount to add to balance cannot have more than two decimal places")));
   }

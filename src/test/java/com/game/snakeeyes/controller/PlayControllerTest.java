@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.game.snakeeyes.helper.JsonHelper.loadJsonFile;
 import static com.game.snakeeyes.helper.JsonHelper.mapJsonFileToObject;
-import static com.game.snakeeyes.helper.TestDataHelper.PLAY_RESPONSE_SNAKE_EYES;
+import static com.game.snakeeyes.helper.TestDataHelper.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -29,8 +29,8 @@ class PlayControllerTest {
   void shouldReturnSuccessfulPlayResponse() throws Exception {
 
     PlayResponse playResponse = mapJsonFileToObject(PLAY_RESPONSE_SNAKE_EYES, PlayResponse.class);
-    given(service.getPlayResponse(1.0)).willReturn(playResponse);
-    mvc.perform(get("/play?stake=1.0"))
+    given(service.getPlayResponse(ONE_DOUBLE)).willReturn(playResponse);
+    mvc.perform(get(PLAY_URL))
         .andExpect(status().isOk())
         .andExpect(content().json(loadJsonFile(PLAY_RESPONSE_SNAKE_EYES)));
   }
@@ -42,7 +42,7 @@ class PlayControllerTest {
         .andExpect(status().isBadRequest())
         .andExpect(
             jsonPath(
-                "$.message", Matchers.is("the stake entered must be either 1.0, 2.0 or 10.0")));
+                MESSAGE_QUERY, Matchers.is("the stake entered must be either 1.0, 2.0 or 10.0")));
   }
 
   @Test

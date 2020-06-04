@@ -20,6 +20,10 @@ import static org.mockito.BDDMockito.given;
 @SpringBootTest
 class PlayServiceTest {
 
+  private static final int ONE_THOUSAND = 1000;
+  private static final int ONE = 1;
+  private static final int THREE = 3;
+
   private PlayService service;
 
   @Mock private MongoDBInteractionService mongoDBInteractionService;
@@ -33,9 +37,9 @@ class PlayServiceTest {
 
   @Test
   void shouldGetSnakeEyesPlayResponse() throws Exception {
-    mockClient(1, 1);
-    mockMongoDBService(1000);
-    PlayResponse actualResponse = service.getPlayResponse(1.0);
+    mockClient(ONE, ONE);
+    mockMongoDBService(ONE_THOUSAND);
+    PlayResponse actualResponse = service.getPlayResponse(ONE_DOUBLE);
     PlayResponse expectedResponse =
         mapJsonFileToObject(PLAY_RESPONSE_SNAKE_EYES, PlayResponse.class);
     assertThat(actualResponse).isEqualTo(expectedResponse);
@@ -43,18 +47,18 @@ class PlayServiceTest {
 
   @Test
   void shouldGetYouWinPlayResponse() throws Exception {
-    mockClient(3, 3);
-    mockMongoDBService(1000);
-    PlayResponse actualResponse = service.getPlayResponse(1.0);
+    mockClient(THREE, THREE);
+    mockMongoDBService(ONE_THOUSAND);
+    PlayResponse actualResponse = service.getPlayResponse(ONE_DOUBLE);
     PlayResponse expectedResponse = mapJsonFileToObject(PLAY_RESPONSE_YOU_WIN, PlayResponse.class);
     assertThat(actualResponse).isEqualTo(expectedResponse);
   }
 
   @Test
   void shouldGetYouWinLoseResponse() throws Exception {
-    mockClient(1, 3);
-    mockMongoDBService(1000);
-    PlayResponse actualResponse = service.getPlayResponse(1.0);
+    mockClient(ONE, THREE);
+    mockMongoDBService(ONE_THOUSAND);
+    PlayResponse actualResponse = service.getPlayResponse(ONE_DOUBLE);
     PlayResponse expectedResponse = mapJsonFileToObject(PLAY_RESPONSE_YOU_LOSE, PlayResponse.class);
     assertThat(actualResponse).isEqualTo(expectedResponse);
   }

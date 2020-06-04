@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Flux;
 
+import static com.game.snakeeyes.helper.TestDataHelper.EXPECTED_BALANCE_DOCUMENT;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,20 +28,16 @@ class MongoDBInteractionServiceTest {
 
   @Test
   void shouldReturnBalanceDocumentFromMongoDB() {
-    BalanceDocument expectedBalanceDocument =
-        BalanceDocument.builder().balanceId(1234).balance(1000.0).build();
     given(balanceRepository.findAll())
-        .willReturn(Flux.fromIterable(singletonList(expectedBalanceDocument)));
+        .willReturn(Flux.fromIterable(singletonList(EXPECTED_BALANCE_DOCUMENT)));
     BalanceDocument actualBalanceDocument = service.getCurrentBalance();
-    assertThat(actualBalanceDocument).isEqualTo(expectedBalanceDocument);
+    assertThat(actualBalanceDocument).isEqualTo(EXPECTED_BALANCE_DOCUMENT);
   }
 
   @Test
   void shouldBuildNewBalanceDocumentIfMongoDBIsNull() {
-    BalanceDocument expectedBalanceDocument =
-        BalanceDocument.builder().balanceId(1234).balance(1000.0).build();
     given(balanceRepository.findAll()).willReturn(Flux.fromIterable(emptyList()));
     BalanceDocument actualBalanceDocument = service.getCurrentBalance();
-    assertThat(actualBalanceDocument).isEqualTo(expectedBalanceDocument);
+    assertThat(actualBalanceDocument).isEqualTo(EXPECTED_BALANCE_DOCUMENT);
   }
 }
