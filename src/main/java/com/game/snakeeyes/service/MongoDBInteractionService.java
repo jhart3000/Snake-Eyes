@@ -4,6 +4,8 @@ import com.game.snakeeyes.mongodb.BalanceDocument;
 import com.game.snakeeyes.mongodb.BalanceRepository;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 @Slf4j
 public class MongoDBInteractionService {
 
@@ -14,13 +16,15 @@ public class MongoDBInteractionService {
   }
 
   BalanceDocument getCurrentBalance() {
-    BalanceDocument balanceDocument = balanceRepository.findAll().blockFirst();
-    if (balanceDocument == null) {
-      log.info("initial £1000 balance created because mongoDB returned null");
+    try {
+      BalanceDocument balanceDocument = balanceRepository.findAll().blockFirst();
+      log.info("balance retrieved as: {}", Objects.requireNonNull(balanceDocument).getBalance());
+      return balanceDocument;
+
+    } catch (RuntimeException e) {
+      log.info("initial £1000 balance created because nothing could be retrieved from MongoDB");
       return BalanceDocument.builder().balance(1000.00).balanceId(1234).build();
     }
-    log.info("balance retrieved as: {}", balanceDocument.getBalance());
-    return balanceDocument;
   }
 
   void saveBalanceDocument(BalanceDocument balanceDocument, double newBalance) {

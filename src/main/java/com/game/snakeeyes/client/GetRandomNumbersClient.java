@@ -8,6 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Objects;
+
+import static java.lang.String.format;
+
 @Slf4j
 public class GetRandomNumbersClient {
 
@@ -26,16 +30,18 @@ public class GetRandomNumbersClient {
             .queryParam("format", "plain");
 
     log.info("attempting to retrieve numbers from random numbers client");
-    ResponseEntity<String> response =
-        restTemplate.getForEntity(builder.toUriString(), String.class);
+    try {
+      ResponseEntity<String> response =
+          restTemplate.getForEntity(builder.toUriString(), String.class);
 
-    if (response == null) {
-      log.error("random numbers client is returning null");
-      throw new ClientException("Random numbers client failed and is returning null");
+      log.info("successfully retrieved numbers from random numbers client");
+      return convertToRandomNumbersResponse(Objects.requireNonNull(response.getBody()));
+
+    } catch (RuntimeException e) {
+      log.error("random numbers client has failed");
+      throw new ClientException(
+          format("Random numbers client failed with error message: %s", e.getMessage()));
     }
-
-    log.info("successfully retrieved numbers from random numbers client");
-    return convertToRandomNumbersResponse(response.getBody());
   }
 
   private RandomNumbersResponse convertToRandomNumbersResponse(String responseBody) {

@@ -55,4 +55,15 @@ class BalanceControllerTest {
         .andExpect(
             jsonPath("$.message", Matchers.is("the amount to add to balance cannot be negative")));
   }
+
+  @Test
+  void shouldReturnSnakeEyesExceptionWhenAmountToAddHasMoreThanTwoDecimalPlaces() throws Exception {
+    mvc.perform(put("/addToBalance?amountToAdd=50.123"))
+        .andExpect(status().isBadRequest())
+        .andExpect(
+            jsonPath(
+                "$.message",
+                Matchers.is(
+                    "the amount to add to balance cannot have more than two decimal places")));
+  }
 }

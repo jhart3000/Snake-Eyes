@@ -37,9 +37,13 @@ class GetRandomNumbersClientTest {
   }
 
   @Test
-  void shouldReturnClientExceptionWhenClientReturnsNull() {
+  void shouldReturnClientExceptionWhenClientReturnsException() {
+    Mockito.when(restTemplate.getForEntity(RANDOM_NUMBERS_URL, String.class))
+        .thenThrow(new RuntimeException("error getting random numbers"));
     Throwable errorResponse = catchThrowable(() -> client.getRandomNumbers());
-    assertThat(errorResponse).hasMessage("Random numbers client failed and is returning null");
+    assertThat(errorResponse)
+        .hasMessage(
+            "Random numbers client failed with error message: error getting random numbers");
     assertThat(errorResponse).isInstanceOf(ClientException.class);
   }
 }

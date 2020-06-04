@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RestController
 @Slf4j
 public class BalanceController {
@@ -42,10 +44,17 @@ public class BalanceController {
           @RequestParam()
           double amountToAdd)
       throws SnakeEyesException {
+
     if (amountToAdd < 0) {
       log.error("amountToAdd value: {} is negative and must be a positive value", amountToAdd);
       throw new SnakeEyesException("the amount to add to balance cannot be negative");
     }
+    if (BigDecimal.valueOf(amountToAdd).scale() > 2) {
+      log.error("amountToAdd value: {} can only have 2 decimal places", amountToAdd);
+      throw new SnakeEyesException(
+          "the amount to add to balance cannot have more than two decimal places");
+    }
+
     return service.addMoneyToBalance(amountToAdd);
   }
 }
