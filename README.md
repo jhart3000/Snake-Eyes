@@ -1,4 +1,4 @@
-This is a spring boot app using Java 11, maven and mongoDB. It requires the lombok plugin to be enabled with your chosen IDE. It also supports Docker.
+This is a spring boot app using Java 11, maven and mongoDB. It requires the lombok plugin to be enabled with your chosen IDE. It also supports Docker and Sonar Qube.
 
 After cloning the repository from GitHub the project must be built using mvn clean install to generate the snakeeyes-0.0.1-SNAPSHOT.jar in the target folder.
 

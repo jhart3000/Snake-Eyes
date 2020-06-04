@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static com.game.snakeeyes.helper.TestDataHelper.EXPECTED_BALANCE_DOCUMENT;
-import static com.game.snakeeyes.helper.TestDataHelper.FIVE_HUNDRED;
+import static com.game.snakeeyes.helper.TestDataHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -35,8 +34,7 @@ class BalanceServiceTest {
   @Test
   void shouldReturnSuccessfulUpdateMessage() {
     MessageResponse actualResponse = service.addMoneyToBalance(FIVE_HUNDRED);
-    MessageResponse expectedResponse =
-        MessageResponse.builder().message("Balance successfully updated").build();
+    MessageResponse expectedResponse = MessageResponse.builder().message(BALANCE_UPDATED).build();
     assertThat(actualResponse).isEqualTo(expectedResponse);
   }
 }

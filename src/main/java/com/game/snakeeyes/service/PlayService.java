@@ -1,7 +1,7 @@
 package com.game.snakeeyes.service;
 
 import com.game.snakeeyes.client.GetRandomNumbersClient;
-import com.game.snakeeyes.exception.ClientException;
+import com.game.snakeeyes.exception.InternalException;
 import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.model.RandomNumbersResponse;
@@ -20,7 +20,7 @@ public class PlayService {
     this.client = client;
   }
 
-  public PlayResponse getPlayResponse(double stake) throws SnakeEyesException, ClientException {
+  public PlayResponse getPlayResponse(double stake) throws SnakeEyesException, InternalException {
 
     BalanceDocument balanceDocument = mongoDBInteractionService.getCurrentBalance();
 

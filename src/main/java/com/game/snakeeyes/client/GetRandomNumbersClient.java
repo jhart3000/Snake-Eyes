@@ -1,6 +1,6 @@
 package com.game.snakeeyes.client;
 
-import com.game.snakeeyes.exception.ClientException;
+import com.game.snakeeyes.exception.InternalException;
 import com.game.snakeeyes.model.RandomNumbersResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class GetRandomNumbersClient {
 
   @Autowired private RestTemplate restTemplate;
 
-  public RandomNumbersResponse getRandomNumbers() throws ClientException {
+  public RandomNumbersResponse getRandomNumbers() throws InternalException {
 
     String url = "https://www.random.org/integers";
     UriComponentsBuilder builder =
@@ -39,7 +39,7 @@ public class GetRandomNumbersClient {
 
     } catch (RuntimeException e) {
       log.error("random numbers client has failed");
-      throw new ClientException(
+      throw new InternalException(
           format("Random numbers client failed with error message: %s", e.getMessage()));
     }
   }

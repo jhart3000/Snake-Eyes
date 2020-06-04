@@ -12,6 +12,7 @@ import static com.game.snakeeyes.helper.TestDataHelper.EXPECTED_BALANCE_DOCUMENT
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
@@ -39,5 +40,13 @@ class MongoDBInteractionServiceTest {
     given(balanceRepository.findAll()).willReturn(Flux.fromIterable(emptyList()));
     BalanceDocument actualBalanceDocument = service.getCurrentBalance();
     assertThat(actualBalanceDocument).isEqualTo(EXPECTED_BALANCE_DOCUMENT);
+  }
+
+  @Test
+  void shouldBuildNewBalanceDocumentIfMongoDBThrowsError() {
+    given(balanceRepository.findAll()).willThrow(new RuntimeException());
+    Throwable errorResponse = catchThrowable(() -> service.getCurrentBalance());
+    assertThat(errorResponse)
+        .hasMessage("there was a problem retrieving the balance document form mongoDB");
   }
 }

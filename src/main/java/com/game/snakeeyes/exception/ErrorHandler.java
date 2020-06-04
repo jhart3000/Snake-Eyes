@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ErrorHandler {
 
   @ExceptionHandler(value = SnakeEyesException.class)
-  public ResponseEntity<ErrorResponse> handleApplicationException(SnakeEyesException e) {
+  public ResponseEntity<ErrorResponse> handleSnakeEyesException(SnakeEyesException e) {
     ErrorResponse errorResponse = ErrorResponse.builder().message(e.getMessage()).build();
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
   }
 
-  @ExceptionHandler(value = ClientException.class)
-  public ResponseEntity<ErrorResponse> handleApplicationException(ClientException e) {
+  @ExceptionHandler(value = InternalException.class)
+  public ResponseEntity<ErrorResponse> handleInternalException(InternalException e) {
     ErrorResponse errorResponse = ErrorResponse.builder().message(e.getMessage()).build();
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
   }

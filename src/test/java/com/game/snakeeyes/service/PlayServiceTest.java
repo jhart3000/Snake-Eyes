@@ -1,7 +1,7 @@
 package com.game.snakeeyes.service;
 
 import com.game.snakeeyes.client.GetRandomNumbersClient;
-import com.game.snakeeyes.exception.ClientException;
+import com.game.snakeeyes.exception.InternalException;
 import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.model.RandomNumbersResponse;
@@ -73,7 +73,7 @@ class PlayServiceTest {
     assertThat(errorResponse).isInstanceOf(SnakeEyesException.class);
   }
 
-  private void mockClient(int dice1, int dice2) throws ClientException {
+  private void mockClient(int dice1, int dice2) throws InternalException {
     given(client.getRandomNumbers())
         .willReturn(RandomNumbersResponse.builder().dice1(dice1).dice2(dice2).build());
   }

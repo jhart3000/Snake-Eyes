@@ -1,6 +1,6 @@
 package com.game.snakeeyes.client;
 
-import com.game.snakeeyes.exception.ClientException;
+import com.game.snakeeyes.exception.InternalException;
 import com.game.snakeeyes.model.RandomNumbersResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ class GetRandomNumbersClientTest {
   @Autowired private GetRandomNumbersClient client;
 
   @Test
-  void shouldReturnSuccessfulClientResponse() throws ClientException {
+  void shouldReturnSuccessfulClientResponse() throws InternalException {
     String clientBody = "6\t3\n";
     Mockito.when(restTemplate.getForEntity(RANDOM_NUMBERS_URL, String.class))
         .thenReturn(new ResponseEntity<>(clientBody, HttpStatus.OK));
@@ -44,6 +44,6 @@ class GetRandomNumbersClientTest {
     assertThat(errorResponse)
         .hasMessage(
             "Random numbers client failed with error message: error getting random numbers");
-    assertThat(errorResponse).isInstanceOf(ClientException.class);
+    assertThat(errorResponse).isInstanceOf(InternalException.class);
   }
 }

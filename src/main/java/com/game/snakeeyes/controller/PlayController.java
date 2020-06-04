@@ -1,6 +1,6 @@
 package com.game.snakeeyes.controller;
 
-import com.game.snakeeyes.exception.ClientException;
+import com.game.snakeeyes.exception.InternalException;
 import com.game.snakeeyes.exception.SnakeEyesException;
 import com.game.snakeeyes.model.PlayResponse;
 import com.game.snakeeyes.service.PlayService;
@@ -33,7 +33,7 @@ public class PlayController {
               required = true)
           @RequestParam()
           double stake)
-      throws SnakeEyesException, ClientException {
+      throws SnakeEyesException, InternalException {
 
     if (stake != 1.0 && stake != 2.0 && stake != 10.0) {
       log.error("{} is an invalid stake. The query param can only accept 1.0, 2.0 or 10.0", stake);
